@@ -1,0 +1,271 @@
+[gd_scene load_steps=16 format=3 uid="uid://dbr6ytksfycht"]
+
+[ext_resource type="PackedScene" uid="uid://dibi1q00jp0my" path="res://Scenes/player.tscn" id="1_l756w"]
+[ext_resource type="Script" uid="uid://brw7sqjamn7a8" path="res://Scripts/main_game.gd" id="1_r0mdn"]
+[ext_resource type="MeshLibrary" uid="uid://ct1cbpigs70pi" path="res://MeshLibraries/meshlib.tres" id="2_0e3vx"]
+[ext_resource type="PackedScene" uid="uid://ddcd3rdyrh7fd" path="res://Scenes/damage_number.tscn" id="2_0xqxu"]
+[ext_resource type="Script" uid="uid://bu47o2umc3wv0" path="res://Scripts/camera_rig.gd" id="3_0e3vx"]
+[ext_resource type="Texture2D" uid="uid://b4qokg1e3wn0k" path="res://Images/mouse-right-click-icon-15087.png" id="4_6j5ir"]
+[ext_resource type="Texture2D" uid="uid://3hu5qy0psuf0" path="res://Images/wasdIcon.PNG" id="5_6y7pd"]
+[ext_resource type="Texture2D" uid="uid://ckgsbs0tg075p" path="res://Images/ctrlIcon.PNG" id="6_73nn6"]
+[ext_resource type="Texture2D" uid="uid://b8jsfyosn0qbe" path="res://Images/shiftIcon.PNG" id="7_r0mdn"]
+[ext_resource type="Texture2D" uid="uid://depvusyys0gh0" path="res://Images/spaceIcon.PNG" id="8_0xqxu"]
+[ext_resource type="PackedScene" uid="uid://551b4k5hppq3" path="res://Scenes/enemy.tscn" id="9_73nn6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6y7pd"]
+bg_color = Color(0.16, 0.16, 0.16, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_73nn6"]
+bg_color = Color(0.99309677, 0.8622809, 0.39361286, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6, 0.522, 0.24, 1)
+border_blend = true
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r0mdn"]
+bg_color = Color(0.7602029, 2.5509298e-06, 4.813075e-07, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_6y7pd"]
+vertices = PackedVector3Array(-6.5, 0.3755, -5.5, -6.5, 0.3755, 5.5, 6.5, 0.3755, 5.5, 6.5, 0.3755, -5.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[node name="MainGame" type="Node3D"]
+script = ExtResource("1_r0mdn")
+damage_number_scene = ExtResource("2_0xqxu")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="InstructionsPanel" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.98765427
+offset_left = 16.666668
+offset_top = 777.0
+offset_right = -1569.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="CanvasLayer/InstructionsPanel"]
+layout_mode = 2
+
+[node name="TexturesVBox" type="VBoxContainer" parent="CanvasLayer/InstructionsPanel/Panel"]
+layout_mode = 0
+offset_right = 166.0
+offset_bottom = 280.0
+alignment = 1
+
+[node name="MouseTexture" type="TextureRect" parent="CanvasLayer/InstructionsPanel/Panel/TexturesVBox"]
+custom_minimum_size = Vector2(0, 58.71)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_6j5ir")
+expand_mode = 3
+
+[node name="WASDTexture" type="TextureRect" parent="CanvasLayer/InstructionsPanel/Panel/TexturesVBox"]
+custom_minimum_size = Vector2(0, 78.44)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_6y7pd")
+expand_mode = 3
+
+[node name="ShiftTexture" type="TextureRect" parent="CanvasLayer/InstructionsPanel/Panel/TexturesVBox"]
+custom_minimum_size = Vector2(0, 37.935)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("7_r0mdn")
+expand_mode = 3
+
+[node name="CtrlTexture" type="TextureRect" parent="CanvasLayer/InstructionsPanel/Panel/TexturesVBox"]
+custom_minimum_size = Vector2(0, 37.935)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("6_73nn6")
+expand_mode = 3
+
+[node name="SpaceTexture" type="TextureRect" parent="CanvasLayer/InstructionsPanel/Panel/TexturesVBox"]
+custom_minimum_size = Vector2(81.245, 39.06)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("8_0xqxu")
+expand_mode = 3
+
+[node name="LabelsVBox" type="VBoxContainer" parent="CanvasLayer/InstructionsPanel/Panel"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 27.0
+offset_right = 283.0
+offset_bottom = 290.0
+
+[node name="RotateCameraLabel" type="Label" parent="CanvasLayer/InstructionsPanel/Panel/LabelsVBox"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "Rotate camera"
+vertical_alignment = 1
+
+[node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer/InstructionsPanel/Panel/LabelsVBox"]
+custom_minimum_size = Vector2(0, 31.695)
+layout_mode = 2
+
+[node name="MovementLabel" type="Label" parent="CanvasLayer/InstructionsPanel/Panel/LabelsVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Movement"
+vertical_alignment = 1
+
+[node name="ReferenceRect2" type="ReferenceRect" parent="CanvasLayer/InstructionsPanel/Panel/LabelsVBox"]
+custom_minimum_size = Vector2(0, 21.535)
+layout_mode = 2
+
+[node name="RollLabel" type="Label" parent="CanvasLayer/InstructionsPanel/Panel/LabelsVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Roll"
+vertical_alignment = 1
+
+[node name="ReferenceRect3" type="ReferenceRect" parent="CanvasLayer/InstructionsPanel/Panel/LabelsVBox"]
+custom_minimum_size = Vector2(0, 8.745)
+layout_mode = 2
+
+[node name="CrouchLabel" type="Label" parent="CanvasLayer/InstructionsPanel/Panel/LabelsVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Crouch"
+vertical_alignment = 1
+
+[node name="ReferenceRect4" type="ReferenceRect" parent="CanvasLayer/InstructionsPanel/Panel/LabelsVBox"]
+custom_minimum_size = Vector2(0, 6.345)
+layout_mode = 2
+
+[node name="JumpLabel" type="Label" parent="CanvasLayer/InstructionsPanel/Panel/LabelsVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Jump"
+vertical_alignment = 1
+
+[node name="StaminaBarContainer" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -218.66498
+offset_top = -40.0
+offset_right = 219.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/StaminaBarContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 29.0
+offset_top = 13.0
+offset_right = -29.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 1
+alignment = 1
+
+[node name="StaminaBar" type="ProgressBar" parent="CanvasLayer/StaminaBarContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_6y7pd")
+theme_override_styles/fill = SubResource("StyleBoxFlat_73nn6")
+value = 35.0
+show_percentage = false
+
+[node name="StaminaBar2" type="ProgressBar" parent="CanvasLayer/StaminaBarContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+theme_override_styles/background = SubResource("StyleBoxFlat_6y7pd")
+theme_override_styles/fill = SubResource("StyleBoxFlat_73nn6")
+value = 35.0
+show_percentage = false
+
+[node name="StaminaBar3" type="ProgressBar" parent="CanvasLayer/StaminaBarContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+theme_override_styles/background = SubResource("StyleBoxFlat_6y7pd")
+theme_override_styles/fill = SubResource("StyleBoxFlat_73nn6")
+value = 35.0
+show_percentage = false
+
+[node name="PlayerHealthBar" type="ProgressBar" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -188.0
+offset_top = -71.0
+offset_right = 188.0
+offset_bottom = -44.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/fill = SubResource("StyleBoxFlat_r0mdn")
+value = 17.93
+show_percentage = false
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.85075605, 0.52556074, 0, -0.52556074, 0.85075605, 0, 3.0693748, 4.2994194)
+
+[node name="CameraRig" type="Node3D" parent="." node_paths=PackedStringArray("target_node")]
+script = ExtResource("3_0e3vx")
+target_node = NodePath("../Player")
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig"]
+transform = Transform3D(1, 0, 0, 0, 0.8379093, 0.5458095, 0, -0.5458095, 0.8379093, 1.1920929e-07, 1.4412532, 1.7018452)
+size = 1.755
+
+[node name="Player" parent="." node_paths=PackedStringArray("camera_rig") instance=ExtResource("1_l756w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24796006, 0)
+camera_rig = NodePath("../CameraRig")
+max_speed = 1.5
+min_animation_speed = 0.3
+attack_damage = 1.0
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_6y7pd")
+
+[node name="GridMap" type="GridMap" parent="NavigationRegion3D"]
+mesh_library = ExtResource("2_0e3vx")
+cell_size = Vector3(1, 0.001, 1)
+cell_scale = 0.25
+data = {
+"cells": PackedInt32Array(65535, 65535, 0, 65535, 0, 0, 0, 65535, 0, 0, 0, 0, 65529, 65530, 0, 65529, 65531, 0, 65529, 65532, 0, 65529, 65533, 0, 65529, 65534, 0, 65529, 65535, 0, 65529, 0, 0, 65529, 1, 0, 65529, 2, 0, 65529, 3, 0, 65529, 4, 0, 65529, 5, 0, 65530, 65530, 0, 65530, 65531, 0, 65530, 65532, 0, 65530, 65533, 0, 65530, 65534, 0, 65530, 65535, 0, 65530, 0, 0, 65530, 1, 0, 65530, 2, 0, 65530, 3, 0, 65530, 4, 0, 65530, 5, 0, 65531, 65530, 0, 65531, 65531, 0, 65531, 65532, 0, 65531, 65533, 0, 65531, 65534, 0, 65531, 65535, 0, 65531, 0, 0, 65531, 1, 0, 65531, 2, 0, 65531, 3, 0, 65531, 4, 0, 65531, 5, 0, 65532, 65530, 0, 65532, 65531, 0, 65532, 65532, 0, 65532, 65533, 0, 65532, 65534, 0, 65532, 65535, 0, 65532, 0, 0, 65532, 1, 0, 65532, 2, 0, 65532, 3, 0, 65532, 4, 0, 65532, 5, 0, 65533, 65530, 0, 65533, 65531, 0, 65533, 65532, 0, 65533, 65533, 0, 65533, 65534, 0, 65533, 65535, 0, 65533, 0, 0, 65533, 1, 0, 65533, 2, 0, 65533, 3, 0, 65533, 4, 0, 65533, 5, 0, 65534, 65530, 0, 65534, 65531, 0, 65534, 65532, 0, 65534, 65533, 0, 65534, 65534, 0, 65534, 65535, 0, 65534, 0, 0, 65534, 1, 0, 65534, 2, 0, 65534, 3, 0, 65534, 4, 0, 65534, 5, 0, 65535, 65530, 0, 65535, 65531, 0, 65535, 65532, 0, 65535, 65533, 0, 65535, 65534, 0, 65535, 1, 0, 65535, 2, 0, 65535, 3, 0, 65535, 4, 0, 65535, 5, 0, 0, 65530, 0, 0, 65531, 0, 0, 65532, 0, 0, 65533, 0, 0, 65534, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 1, 65530, 0, 1, 65531, 0, 1, 65532, 0, 1, 65533, 0, 1, 65534, 0, 1, 65535, 0, 1, 0, 0, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 0, 1, 5, 0, 2, 65530, 0, 2, 65531, 0, 2, 65532, 0, 2, 65533, 0, 2, 65534, 0, 2, 65535, 0, 2, 0, 0, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 0, 3, 65530, 0, 3, 65531, 0, 3, 65532, 0, 3, 65533, 0, 3, 65534, 0, 3, 65535, 0, 3, 0, 0, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 0, 3, 5, 0, 4, 65530, 0, 4, 65531, 0, 4, 65532, 0, 4, 65533, 0, 4, 65534, 0, 4, 65535, 0, 4, 0, 0, 4, 1, 0, 4, 2, 0, 4, 3, 0, 4, 4, 0, 4, 5, 0, 5, 65530, 0, 5, 65531, 0, 5, 65532, 0, 5, 65533, 0, 5, 65534, 0, 5, 65535, 0, 5, 0, 0, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 0, 5, 5, 0, 6, 65530, 0, 6, 65531, 0, 6, 65532, 0, 6, 65533, 0, 6, 65534, 0, 6, 65535, 0, 6, 0, 0, 6, 1, 0, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 0)
+}
+
+[node name="Enemy" parent="." instance=ExtResource("9_73nn6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.9630623)
+
+[connection signal="was_hit" from="Enemy" to="." method="_on_enemy_was_hit"]
