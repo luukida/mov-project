@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://dibi1q00jp0my"]
+[gd_scene load_steps=81 format=3 uid="uid://dibi1q00jp0my"]
 
 [ext_resource type="Script" uid="uid://crem7kr5k6c3g" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://cqrtylgbusfxw" path="res://Sprites/Knight/_Idle.png" id="2_6t5aa"]
@@ -516,8 +516,12 @@ fill_from = Vector2(0.5, 0.4957265)
 [sub_resource type="SphereShape3D" id="SphereShape3D_fd4e3"]
 radius = 0.55
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fd4e3"]
+radius = 0.06
+height = 0.38
+
 [node name="Player" type="CharacterBody3D"]
-collision_layer = 2
+collision_mask = 6
 script = ExtResource("1_cvnsp")
 
 [node name="Stats" type="Node" parent="."]
@@ -566,6 +570,7 @@ margin = 0.01
 
 [node name="BlobShadowRayCast3D" type="RayCast3D" parent="." node_paths=PackedStringArray("rigidbody")]
 target_position = Vector3(0, -5, 0)
+collision_mask = 2
 script = ExtResource("15_h4iuc")
 rigidbody = NodePath("..")
 
@@ -574,9 +579,19 @@ size = Vector3(0.182, 0.025, 0.182)
 texture_albedo = SubResource("GradientTexture2D_qqcod")
 
 [node name="AutoAttackRange" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AutoAttackRange"]
 shape = SubResource("SphereShape3D_fd4e3")
+
+[node name="DetectionHitbox" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionHitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.19, 0)
+shape = SubResource("CapsuleShape3D_fd4e3")
 
 [connection signal="timeout" from="RollTimer" to="." method="_on_roll_timer_timeout"]
 [connection signal="timeout" from="AirRollTimer" to="." method="_on_air_roll_timer_timeout"]

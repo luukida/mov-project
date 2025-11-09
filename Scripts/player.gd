@@ -80,6 +80,8 @@ var _roll_anim_fps: float = 10.0
 var _roll_anim_speed_scale: float = 1.0
 var enemies_in_range: Array = []
 var current_target: Node3D = null
+var _default_collision_mask: int
+var _default_collision_layer: int
 
 # --- NODE REFERENCES ---
 @onready var animated_sprite = $AnimatedSprite3D
@@ -124,6 +126,9 @@ func _ready():
 	_calculate_jump_parameters()
 	_calculate_roll_parameters()
 	_calculate_air_roll_parameters()
+	
+	_default_collision_mask = get_collision_mask()
+	_default_collision_layer = get_collision_layer()
 	
 		# --- HEALTH BAR SETUP ---
 	# Define os valores iniciais da barra de vida
@@ -302,9 +307,12 @@ func _physics_process(delta):
 						current_stamina -= cost_one_bar
 						_update_stamina_display()
 						stamina_regen_timer.start()
-
-						is_rolling_in_ground = true # Enter the rolling state
-
+						
+						stats.is_invulnerable = true
+						set_collision_mask_value(3, false)
+						set_collision_layer_value(1, false)
+						is_rolling_in_ground = true
+						
 						# Determine roll direction
 						var roll_dir = direction
 						if direction.length() == 0:
@@ -314,9 +322,7 @@ func _physics_process(delta):
 						# Set initial velocity based on calculation
 						velocity = roll_direction * _roll_initial_velocity
 
-						# --- THE FIX IS HERE: Start the ground roll timer ---
 						roll_timer.start()
-						#print("--> Ground Roll Timer STARTED <--") # Optional Debug
 
 						# Play animation and set its speed scale
 						if input_dir.x < 0: animated_sprite.flip_h = true
@@ -329,6 +335,11 @@ func _physics_process(delta):
 						current_stamina -= cost_two_bars
 						_update_stamina_display()
 						stamina_regen_timer.start()
+						
+						stats.is_invulnerable = true
+						set_collision_mask_value(3, false)
+						set_collision_layer_value(1, false)
+						
 						has_rolled_in_air = true
 						is_rolling_in_ground = true
 						animated_sprite.speed_scale = _air_roll_anim_speed_scale
@@ -564,6 +575,11 @@ func _update_stamina_display():
 func _on_roll_timer_timeout():
 	#print("--> Ground Roll Timer FINISHED <--")
 	is_rolling_in_ground = false
+	
+	stats.is_invulnerable = false
+	set_collision_mask(_default_collision_mask)
+	set_collision_layer(_default_collision_layer)
+	
 	# Ensure a clean stop after the ground roll duration
 	velocity.x = 0
 	velocity.z = 0
@@ -571,6 +587,11 @@ func _on_roll_timer_timeout():
 func _on_air_roll_timer_timeout():
 	#print("--> Air Roll Timer FINISHED <--")
 	is_rolling_in_ground = false # Exit the shared rolling state
+	
+	stats.is_invulnerable = false
+	set_collision_mask(_default_collision_mask)
+	set_collision_layer(_default_collision_layer)
+	
 	# Don't zero out velocity here, let gravity continue
 	if not is_on_floor():
 		animated_sprite.play("fall") # Transition to fall animation

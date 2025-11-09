@@ -6,6 +6,7 @@ var state_machine
 
 @export var speed: float = 0.3
 @export var attack_damage: float = 10.0
+@export var turn_rate: float = 5.0 # Velocidade de rotação (em radianos por segundo)
 
 # Referências aos nossos nós filhos
 @onready var nav_agent = $NavigationAgent3D
@@ -59,14 +60,15 @@ func _physics_process(delta):
 	var current_state = state_machine.get_current_node()
 	is_dead = (current_state == STATE_DEATH) 
 	var is_attacking = (current_state == STATE_ATTACK)
+	var did_attack_this_frame = false
 
-	var player_in_sensor = sensor_area.overlaps_body(player)
+	var player_in_sensor = !sensor_area.get_overlapping_areas().is_empty()
 	
 	# Se o jogador estiver NO SENSOR, execute a IA de combate
 	if player_in_sensor and not is_dead:
 	
-		var did_attack_this_frame = false
-		var player_in_attack_area = attack_area.overlaps_body(player)
+		did_attack_this_frame = false
+		var player_in_attack_area = !attack_area.get_overlapping_areas().is_empty()
 		
 		# --- LÓGICA DE MOVIMENTO E ROTAÇÃO ---
 		if not is_attacking and current_state != STATE_SPAWN:
@@ -84,8 +86,30 @@ func _physics_process(delta):
 			velocity.z = direction.z * speed
 		
 			if player:
-				skeleton_minion.look_at(target_pos, Vector3.UP)
-				skeleton_minion.rotate_y(deg_to_rad(180)) 
+				# 1. Calcular a direção 3D para o alvo (target_pos já está nivelado em Y com o INIMIGO)
+				var target_direction = (target_pos - skeleton_minion.global_position)
+				
+				# 2. Nivelar a DIREÇÃO (ignoramos o Y) para que ele só gire no eixo horizontal
+				target_direction.y = 0
+				target_direction = target_direction.normalized()
+
+				if target_direction != Vector3.ZERO:
+					
+					# 3. Calcular a 'basis' (orientação) alvo, com escala 1
+					# Ela representa a rotação que "olha" para a direção
+					var target_basis = Basis.looking_at(target_direction, Vector3.UP)
+					
+					# 4. Aplicar a compensação de 180 graus do seu modelo
+					target_basis = target_basis.rotated(Vector3.UP, deg_to_rad(180))
+					
+					# --- CORREÇÃO COM QUATERNION (MAIS SEGURO) ---
+					
+					# 5. Converter a 'basis' alvo para um Quaternion (só rotação)
+					var target_rotation = target_basis.get_rotation_quaternion()
+					
+					# 6. Interpolar o 'quaternion' ATUAL do esqueleto em direção ao 'quaternion' ALVO
+					# Isso NÃO afeta a escala de forma alguma.
+					skeleton_minion.quaternion = skeleton_minion.quaternion.slerp(target_rotation, turn_rate * delta)
 				
 		else:
 			# (Se estiver Atacando ou Morto)
@@ -119,7 +143,7 @@ func _physics_process(delta):
 	move_and_slide()
 	
 	# --- LÓGICA DE ANIMAÇÃO (Idle/Walk) - CORRIGIDA ---
-	if not is_dead:
+	if not is_dead and not is_attacking and not did_attack_this_frame:
 		var moving = velocity.length() > 0.1
 		animation_tree.set("parameters/conditions/is_moving", moving)
 		animation_tree.set("parameters/conditions/is_idle", not moving)

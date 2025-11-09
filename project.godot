@@ -63,6 +63,13 @@ crouch={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="player_physics"
+3d_physics/layer_2="world"
+3d_physics/layer_3="enemies"
+3d_physics/layer_4="player_detection"
+
 [physics]
 
 3d/default_gravity=-9.8

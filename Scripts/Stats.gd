@@ -12,13 +12,15 @@ signal damage_taken(amount)
 @export var max_health: float = 100.0
 var current_health: float
 
+var is_invulnerable: bool = false
+
 func _ready():
 	# Começa com a vida cheia
 	current_health = max_health
 
 func take_damage(amount: float):
-	# Se já estiver morto, não faça nada
-	if current_health <= 0:
+	# Se estiver invulnerável OU morto, não faça nada
+	if is_invulnerable or current_health <= 0: # <-- MODIFIQUE ESTA LINHA
 		return
 
 	current_health -= amount
