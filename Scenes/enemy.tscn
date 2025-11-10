@@ -4635,6 +4635,33 @@ bones/21/rotation = Quaternion(-0.1660994, 0.2390854, -0.07152497, 0.9540091)
 bones/22/position = Vector3(-5.138423e-10, 0.096125096, -0.057500005)
 bones/22/rotation = Quaternion(-6.2431266e-10, -3.9854977e-09, 0.7071068, 0.7071067)
 
+[node name="Skeleton_Minion_ArmLeft" parent="Skeleton_Minion/Rig_Medium/Skeleton3D" index="0"]
+layers = 2
+
+[node name="Skeleton_Minion_ArmRight" parent="Skeleton_Minion/Rig_Medium/Skeleton3D" index="1"]
+layers = 2
+
+[node name="Skeleton_Minion_Body" parent="Skeleton_Minion/Rig_Medium/Skeleton3D" index="2"]
+layers = 2
+
+[node name="Skeleton_Minion_Cloak" parent="Skeleton_Minion/Rig_Medium/Skeleton3D" index="3"]
+layers = 2
+
+[node name="Skeleton_Minion_Eyes" parent="Skeleton_Minion/Rig_Medium/Skeleton3D" index="4"]
+layers = 2
+
+[node name="Skeleton_Minion_Head" parent="Skeleton_Minion/Rig_Medium/Skeleton3D" index="5"]
+layers = 2
+
+[node name="Skeleton_Minion_Jaw" parent="Skeleton_Minion/Rig_Medium/Skeleton3D" index="6"]
+layers = 2
+
+[node name="Skeleton_Minion_LegLeft" parent="Skeleton_Minion/Rig_Medium/Skeleton3D" index="7"]
+layers = 2
+
+[node name="Skeleton_Minion_LegRight" parent="Skeleton_Minion/Rig_Medium/Skeleton3D" index="8"]
+layers = 2
+
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Skeleton_Minion/Rig_Medium/Skeleton3D" index="9"]
 transform = Transform3D(0.09422742, -0.27508137, -0.9567919, -0.102149844, -0.9586666, 0.2655609, -0.99029607, 0.07271301, -0.11843249, -0.5513018, 0.6595455, 0.057389922)
 bone_name = "hand.r"
@@ -4668,6 +4695,7 @@ shape = SubResource("CapsuleShape3D_0830c")
 
 [node name="HealthBarSprite" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3443265, 0)
+layers = 2
 cast_shadow = 0
 pixel_size = 0.0013
 billboard = 2

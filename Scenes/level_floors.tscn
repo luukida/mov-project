@@ -21,6 +21,7 @@ size = Vector3(0.5, 0.125, 0.49975586)
 
 [node name="FloorDirt" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
+layers = 2
 material_override = SubResource("StandardMaterial3D_wjf51")
 mesh = ExtResource("2_5sfvn")
 
@@ -32,6 +33,7 @@ shape = SubResource("BoxShape3D_0imtb")
 
 [node name="FloorDirtGrave" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
+layers = 2
 mesh = ExtResource("3_u3h1r")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="FloorDirtGrave"]
@@ -41,6 +43,7 @@ shape = SubResource("ConcavePolygonShape3D_lh0w0")
 
 [node name="FloorDirtSmall" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, 0.25)
+layers = 2
 mesh = ExtResource("4_xa3ib")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="FloorDirtSmall"]

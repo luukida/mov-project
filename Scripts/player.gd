@@ -100,9 +100,8 @@ var _default_collision_layer: int
 @onready var attack_timer = $AttackTimer
 @onready var stats = $Stats # Referência ao nosso nó de Stats
 @onready var health_bar = $"../CanvasLayer/PlayerHealthBar"
-
-# --- NOVAS REFERÊNCIAS DA REATORAÇÃO ---
 @onready var anim_tree = $AnimationTree
+@onready var attack_range_decal = $AttackRangeDecal
 
 # --- CONSTANTS ---
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") 
@@ -316,13 +315,6 @@ func _physics_process(delta):
 						velocity.z = direction.z * _air_roll_initial_velocity
 						velocity.y = air_roll_vertical_boost
 						air_roll_timer.start()
-
-			# Standard Run/Idle/Turnaround/Fall animations
-			#
-			# --- [BLOCO REMOVIDO] ---
-			# Toda a lógica 'else' que continha `animated_sprite.play(...)` 
-			# foi removida. A AnimationTree agora cuida disso.
-			#
 	
 	# <<<--- End of State 4 'else' block ---<<<
 
@@ -347,6 +339,16 @@ func _physics_process(delta):
 
 	# --- COMBAT LOGIC ---
 	_update_target()
+	
+	# Controla a visibilidade do anel de ataque
+	if not enemies_in_range.is_empty():
+		if not attack_range_decal.visible:
+			print("DEBUG: Mostrando Decal de Ataque")
+			attack_range_decal.show()
+	else:
+		if attack_range_decal.visible:
+			print("DEBUG: Escondendo Decal de Ataque")
+			attack_range_decal.hide()
 	
 	if current_target and attack_timer.is_stopped() and not is_rolling_in_ground and not is_in_crouch_transition:
 		# Em vez de tocar a animação aqui, vamos dizer à AnimationTree para atacar.
