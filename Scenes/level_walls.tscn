@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://ca7er657bgw4l"]
+
+[ext_resource type="PackedScene" uid="uid://bnvxwkaeuvk10" path="res://Scenario/Walls/archGate.fbx" id="1_m1qcd"]
+[ext_resource type="PackedScene" uid="uid://bjesjsmipawo3" path="res://Scenario/Walls/fence.fbx" id="2_bt178"]
+[ext_resource type="PackedScene" uid="uid://cw117dekm0oad" path="res://Scenario/Walls/fence_Broken.fbx" id="3_xeklj"]
+[ext_resource type="PackedScene" uid="uid://bheh1pc7s1l20" path="res://Scenario/Walls/fence_Gate.fbx" id="4_wa4yv"]
+
+[node name="LevelPieces" type="Node3D"]
+
+[node name="archGate" parent="." instance=ExtResource("1_m1qcd")]
+
+[node name="fence" parent="." instance=ExtResource("2_bt178")]
+
+[node name="fence_Broken" parent="." instance=ExtResource("3_xeklj")]
+
+[node name="fence_Gate" parent="." instance=ExtResource("4_wa4yv")]

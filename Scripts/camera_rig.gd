@@ -7,9 +7,10 @@ extends Node3D
 @export var target_node: Node3D
 
 func _process(_delta):
+	pass
 	# Make the camera rig always follow the target's position.
-	if target_node:
-		global_position = target_node.global_position
+	#if target_node:
+		#global_position = target_node.global_position
 
 func _unhandled_input(event):
 	# Check if the right mouse button is held down and the mouse is moving.

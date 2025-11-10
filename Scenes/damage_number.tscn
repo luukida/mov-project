@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://m5fc34ajwqro" path="res://Scripts/damage_number.gd" id="1_n4jia"]
 
 [node name="DamageNumber" type="Label3D"]
-billboard = 2
+billboard = 1
 no_depth_test = true
 texture_filter = 0
 render_priority = 1

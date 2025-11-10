@@ -13,7 +13,6 @@ config_version=5
 config/name="MovProject"
 run/main_scene="res://Scenes/main_game.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
 
 [display]
 

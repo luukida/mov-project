@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://bi1ngvp6ypdkg"]
+
+[ext_resource type="PackedScene" uid="uid://c1bewsru6ii24" path="res://Scenario/Floors/Paths/path_A.fbx" id="1_njfdt"]
+[ext_resource type="PackedScene" uid="uid://bi6w3ii72ep4a" path="res://Scenario/Floors/Paths/path_B.fbx" id="2_njfji"]
+[ext_resource type="PackedScene" uid="uid://d10n228ckhhxl" path="res://Scenario/Floors/Paths/path_C.fbx" id="3_38g4l"]
+[ext_resource type="PackedScene" uid="uid://c8xoyanri4s5y" path="res://Scenario/Floors/Paths/path_D.fbx" id="4_6to0m"]
+
+[node name="LevelPaths" type="Node3D"]
+
+[node name="path_A" parent="." instance=ExtResource("1_njfdt")]
+
+[node name="path_B" parent="." instance=ExtResource("2_njfji")]
+
+[node name="path_C" parent="." instance=ExtResource("3_38g4l")]
+
+[node name="path_D" parent="." instance=ExtResource("4_6to0m")]

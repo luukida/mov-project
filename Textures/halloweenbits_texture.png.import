@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://pmfleub4n726"
-path.s3tc="res://.godot/imported/halloweenbits_texture.png-895976c5ab352766610c8dd944222f27.s3tc.ctex"
+path.s3tc="res://.godot/imported/halloweenbits_texture.png-49b7bd5148011e6cc4cbb7bd1aa62bd2.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Sprites/Scenario/halloweenbits_texture.png"
-dest_files=["res://.godot/imported/halloweenbits_texture.png-895976c5ab352766610c8dd944222f27.s3tc.ctex"]
+source_file="res://Textures/halloweenbits_texture.png"
+dest_files=["res://.godot/imported/halloweenbits_texture.png-49b7bd5148011e6cc4cbb7bd1aa62bd2.s3tc.ctex"]
 
 [params]
 
