@@ -81,6 +81,7 @@ var enemies_in_range: Array = []
 var current_target: Node3D = null
 var _default_collision_mask: int
 var _default_collision_layer: int
+var health_tween: Tween
 
 # --- NODE REFERENCES ---
 @onready var animated_sprite = $AnimatedSprite3D
@@ -99,7 +100,8 @@ var _default_collision_layer: int
 @onready var attack_range = $AutoAttackRange
 @onready var attack_timer = $AttackTimer
 @onready var stats = $Stats # Referência ao nosso nó de Stats
-@onready var health_bar = $"../CanvasLayer/PlayerHealthBar"
+@onready var health_bar_front = $"../CanvasLayer/HealthBar_Front"
+@onready var health_bar_back = $"../CanvasLayer/HealthBar_Back"
 @onready var anim_tree = $AnimationTree
 @onready var attack_range_decal = $AttackRangeDecal
 
@@ -125,8 +127,11 @@ func _ready():
 	_default_collision_layer = get_collision_layer()
 	
 	# --- HEALTH BAR SETUP ---
-	health_bar.max_value = stats.max_health
-	health_bar.value = stats.current_health
+	# Define os valores iniciais de AMBAS as barras
+	health_bar_front.max_value = stats.max_health
+	health_bar_front.value = stats.current_health
+	health_bar_back.max_value = stats.max_health
+	health_bar_back.value = stats.current_health
 	stats.health_changed.connect(_on_player_health_changed)
 	
 	# --- COMBAT SETUP ---
@@ -518,8 +523,40 @@ func _set_air_roll_duration(new_duration: float):
 # --- HEALTH BAR FUNCTIONS ---
 
 func _on_player_health_changed(current_health, max_health):
-	health_bar.value = current_health
-	health_bar.max_value = max_health
+	# 1. Atualiza os valores máximos (caso mudem)
+	health_bar_front.max_value = max_health
+	health_bar_back.max_value = max_health
+
+	# 2. A barra da FRENTE (vermelha) atualiza IMEDIATAMENTE
+	health_bar_front.value = current_health
+
+	# 3. Mata qualquer tween anterior para evitar conflitos
+	if health_tween and health_tween.is_running():
+		health_tween.kill()
+
+	# 4. Cria o novo Tween para o feedback
+	health_tween = create_tween()
+
+	# --- EFEITO 1: TREPIDAÇÃO (Shake) ---
+	# Pega a posição original da barra
+	var original_pos = health_bar_front.position
+	var shake_strength = 10.0 # Quão forte a barra treme (em pixels)
+
+	# Treme para a direita, esquerda e volta ao centro
+	# Nós trememos AMBAS as barras juntas para que elas não se separem
+	health_tween.tween_property(health_bar_front, "position", original_pos + Vector2(shake_strength, 0), 0.05)
+	health_tween.parallel().tween_property(health_bar_back, "position", original_pos + Vector2(shake_strength, 0), 0.05)
+
+	health_tween.tween_property(health_bar_front, "position", original_pos - Vector2(shake_strength, 0), 0.05)
+	health_tween.parallel().tween_property(health_bar_back, "position", original_pos - Vector2(shake_strength, 0), 0.05)
+
+	health_tween.tween_property(health_bar_front, "position", original_pos, 0.05)
+	health_tween.parallel().tween_property(health_bar_back, "position", original_pos, 0.05)
+
+	# --- EFEITO 2: BARRA FANTASMA (Atraso) ---
+	# Anima a barra de TRÁS (branca) para o novo valor
+	# Começa após um atraso (0.3s) e dura 0.4s
+	health_tween.tween_property(health_bar_back, "value", current_health, 0.4).set_delay(0.3).set_ease(Tween.EASE_OUT)
 
 
 # --- COMBAT FUNCTIONS ---

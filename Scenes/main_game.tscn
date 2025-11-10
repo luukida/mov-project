@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dbr6ytksfycht"]
+[gd_scene load_steps=35 format=3 uid="uid://dbr6ytksfycht"]
 
 [ext_resource type="PackedScene" uid="uid://dibi1q00jp0my" path="res://Scenes/player.tscn" id="1_l756w"]
 [ext_resource type="Script" uid="uid://brw7sqjamn7a8" path="res://Scripts/main_game.gd" id="1_r0mdn"]
@@ -43,6 +43,16 @@ corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ns551"]
+bg_color = Color(18.892157, 18.892157, 18.892157, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0bxlt"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r0mdn"]
 bg_color = Color(0.7602029, 2.5509298e-06, 4.813075e-07, 1)
@@ -248,7 +258,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_73nn6")
 value = 35.0
 show_percentage = false
 
-[node name="PlayerHealthBar" type="ProgressBar" parent="CanvasLayer"]
+[node name="HealthBar_Back" type="ProgressBar" parent="CanvasLayer"]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -260,6 +270,23 @@ offset_right = 188.0
 offset_bottom = -44.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_styles/fill = SubResource("StyleBoxFlat_ns551")
+value = 33.79
+show_percentage = false
+
+[node name="HealthBar_Front" type="ProgressBar" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -188.0
+offset_top = -71.0
+offset_right = 188.0
+offset_bottom = -44.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_0bxlt")
 theme_override_styles/fill = SubResource("StyleBoxFlat_r0mdn")
 value = 17.93
 show_percentage = false
