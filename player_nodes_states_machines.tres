@@ -1,0 +1,79 @@
+[gd_resource type="AnimationNodeStateMachine" load_steps=16 format=3 uid="uid://dtpo23rgtcltr"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fd4e3"]
+animation = &"jumpfallinbetween"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fs7ks"]
+animation = &"fall"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_l6n3p"]
+animation = &"jump"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_fd4e3"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_fd4e3")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_fs7ks")
+blend_point_1/pos = -0.01
+blend_point_2/node = SubResource("AnimationNodeAnimation_l6n3p")
+blend_point_2/pos = 0.01
+min_space = -0.01
+max_space = 0.01
+value_label = "v_velocity"
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qqcod"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_igrcy"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_fs7ks"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_qqcod")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_igrcy")
+blend_point_1/pos = 0.01
+min_space = 0.0
+max_space = 0.01
+value_label = "h_velocity"
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_olqyp"]
+animation = &"roll"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_l6n3p"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wpjfl"]
+advance_mode = 2
+advance_expression = "!is_on_floor()"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bi64h"]
+advance_mode = 2
+advance_expression = "is_on_floor()"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2ijsl"]
+advance_mode = 2
+advance_expression = "is_on_floor() && is_rolling_in_ground"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_p1odr"]
+switch_mode = 2
+advance_mode = 2
+advance_expression = "is_on_floor() && !is_rolling_in_ground"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0gysh"]
+advance_mode = 2
+advance_expression = "!is_on_floor() && has_rolled_in_air"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vfarp"]
+switch_mode = 2
+advance_mode = 2
+advance_expression = "!is_on_floor() && !is_rolling_in_ground"
+
+[resource]
+states/InAir/node = SubResource("AnimationNodeBlendSpace1D_fd4e3")
+states/InAir/position = Vector2(397, 184)
+states/Locomotion/node = SubResource("AnimationNodeBlendSpace1D_fs7ks")
+states/Locomotion/position = Vector2(397, 100)
+states/Roll/node = SubResource("AnimationNodeAnimation_olqyp")
+states/Roll/position = Vector2(655, 145)
+transitions = ["Start", "Locomotion", SubResource("AnimationNodeStateMachineTransition_l6n3p"), "Locomotion", "InAir", SubResource("AnimationNodeStateMachineTransition_wpjfl"), "InAir", "Locomotion", SubResource("AnimationNodeStateMachineTransition_bi64h"), "Locomotion", "Roll", SubResource("AnimationNodeStateMachineTransition_2ijsl"), "Roll", "Locomotion", SubResource("AnimationNodeStateMachineTransition_p1odr"), "InAir", "Roll", SubResource("AnimationNodeStateMachineTransition_0gysh"), "Roll", "InAir", SubResource("AnimationNodeStateMachineTransition_vfarp")]
