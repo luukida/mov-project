@@ -68,6 +68,7 @@ crouch={
 3d_physics/layer_2="world"
 3d_physics/layer_3="enemies"
 3d_physics/layer_4="player_detection"
+3d_physics/layer_5="shadow_catcher"
 
 [physics]
 

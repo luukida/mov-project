@@ -8,9 +8,13 @@
 [node name="LevelPaths" type="Node3D"]
 
 [node name="path_A" parent="." instance=ExtResource("1_njfdt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0148566365, 0)
 
 [node name="path_B" parent="." instance=ExtResource("2_njfji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0148566365, 0)
 
 [node name="path_C" parent="." instance=ExtResource("3_38g4l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0148566365, 0)
 
 [node name="path_D" parent="." instance=ExtResource("4_6to0m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0148566365, 0)

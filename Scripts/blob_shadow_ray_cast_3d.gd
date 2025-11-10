@@ -11,3 +11,4 @@ func _process(_delta: float) -> void:
 		blobshadow.global_position = get_collision_point()
 	else:
 		blobshadow.hide()
+	

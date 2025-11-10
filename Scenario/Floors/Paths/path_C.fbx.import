@@ -40,8 +40,10 @@ materials/extract_path=""
 _subresources={
 "nodes": {
 "PATH:path_C": {
+"generate/physics": true,
 "physics/layer": 2,
-"physics/mask": 5
+"physics/mask": 5,
+"physics/shape_type": 1
 }
 }
 }

@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/path_A.fbx-ada7ce667e130c4ca684b51cf2aba0f2.s
 
 [params]
 
-nodes/root_type=""
+nodes/root_type="Node3D"
 nodes/root_name=""
 nodes/root_script=null
 nodes/apply_root_scale=true
@@ -40,8 +40,10 @@ materials/extract_path=""
 _subresources={
 "nodes": {
 "PATH:path_A": {
+"generate/physics": true,
 "physics/layer": 2,
-"physics/mask": 5
+"physics/mask": 5,
+"physics/shape_type": 1
 }
 }
 }
