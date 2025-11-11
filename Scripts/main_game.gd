@@ -49,10 +49,11 @@ func _on_enemy_spawn_timer_timeout():
 	# 2. SPAWNAR O INIMIGO
 	var enemy_instance = enemy_scene.instantiate()
 	enemy_instance.was_hit.connect(_on_enemy_was_hit)
-	enemy_instance.global_position = spawn_point
 	
 	# Adiciona o inimigo como filho do MainGame (ou de um nó "Enemies")
 	add_child(enemy_instance)
+	
+	enemy_instance.global_position = spawn_point
 	
 	print("Inimigo spawnado em: ", spawn_point)
 

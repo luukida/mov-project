@@ -1,4 +1,36 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=16 format=3 uid="uid://dtpo23rgtcltr"]
+[gd_resource type="AnimationNodeStateMachine" load_steps=27 format=3 uid="uid://dtpo23rgtcltr"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pe5ot"]
+animation = &"crouch_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4eqle"]
+animation = &"crouch"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qnjhb"]
+animation = &"crouch_walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_s8wr4"]
+animation = &"crouch_walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cd8kh"]
+animation = &"crouch_walk"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_fadou"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_4eqle")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_qnjhb")
+blend_point_1/pos = 0.0
+blend_point_2/node = SubResource("AnimationNodeAnimation_s8wr4")
+blend_point_2/pos = 0.0
+blend_point_3/node = SubResource("AnimationNodeAnimation_cd8kh")
+blend_point_3/pos = 0.01
+min_space = 0.0
+max_space = 0.01
+value_label = "h_velocity"
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_n4drs"]
+animation = &"crouch_up"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fd4e3"]
 animation = &"jumpfallinbetween"
@@ -45,20 +77,20 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wpjfl"]
 advance_mode = 2
-advance_expression = "!is_on_floor()"
+advance_expression = "is_on_floor == false"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bi64h"]
 advance_mode = 2
-advance_expression = "is_on_floor()"
+advance_expression = "is_on_floor == true"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2ijsl"]
 advance_mode = 2
-advance_expression = "is_on_floor() && is_rolling_in_ground"
+advance_expression = "is_rolling == true"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_p1odr"]
 switch_mode = 2
 advance_mode = 2
-advance_expression = "is_on_floor() && !is_rolling_in_ground"
+advance_expression = "is_on_floor == true"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0gysh"]
 advance_mode = 2
@@ -67,13 +99,37 @@ advance_expression = "!is_on_floor() && has_rolled_in_air"
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vfarp"]
 switch_mode = 2
 advance_mode = 2
-advance_expression = "!is_on_floor() && !is_rolling_in_ground"
+advance_expression = "is_on_floor == false"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_a87fj"]
+advance_mode = 2
+advance_expression = "is_crouching == true"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qjemb"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_j4mfl"]
+advance_mode = 2
+advance_expression = "is_crouching == false"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4kb0m"]
+switch_mode = 2
+advance_mode = 2
 
 [resource]
+states/CrouchDown/node = SubResource("AnimationNodeAnimation_pe5ot")
+states/CrouchDown/position = Vector2(251, -45)
+states/CrouchLocomotion/node = SubResource("AnimationNodeBlendSpace1D_fadou")
+states/CrouchLocomotion/position = Vector2(448.58478, -45)
+states/CrouchUp/node = SubResource("AnimationNodeAnimation_n4drs")
+states/CrouchUp/position = Vector2(664.5848, -45)
 states/InAir/node = SubResource("AnimationNodeBlendSpace1D_fd4e3")
-states/InAir/position = Vector2(397, 184)
+states/InAir/position = Vector2(397, 221)
 states/Locomotion/node = SubResource("AnimationNodeBlendSpace1D_fs7ks")
 states/Locomotion/position = Vector2(397, 100)
 states/Roll/node = SubResource("AnimationNodeAnimation_olqyp")
 states/Roll/position = Vector2(655, 145)
-transitions = ["Start", "Locomotion", SubResource("AnimationNodeStateMachineTransition_l6n3p"), "Locomotion", "InAir", SubResource("AnimationNodeStateMachineTransition_wpjfl"), "InAir", "Locomotion", SubResource("AnimationNodeStateMachineTransition_bi64h"), "Locomotion", "Roll", SubResource("AnimationNodeStateMachineTransition_2ijsl"), "Roll", "Locomotion", SubResource("AnimationNodeStateMachineTransition_p1odr"), "InAir", "Roll", SubResource("AnimationNodeStateMachineTransition_0gysh"), "Roll", "InAir", SubResource("AnimationNodeStateMachineTransition_vfarp")]
+states/Start/position = Vector2(56, 100)
+transitions = ["Start", "Locomotion", SubResource("AnimationNodeStateMachineTransition_l6n3p"), "Locomotion", "InAir", SubResource("AnimationNodeStateMachineTransition_wpjfl"), "InAir", "Locomotion", SubResource("AnimationNodeStateMachineTransition_bi64h"), "Locomotion", "Roll", SubResource("AnimationNodeStateMachineTransition_2ijsl"), "Roll", "Locomotion", SubResource("AnimationNodeStateMachineTransition_p1odr"), "InAir", "Roll", SubResource("AnimationNodeStateMachineTransition_0gysh"), "Roll", "InAir", SubResource("AnimationNodeStateMachineTransition_vfarp"), "Locomotion", "CrouchDown", SubResource("AnimationNodeStateMachineTransition_a87fj"), "CrouchDown", "CrouchLocomotion", SubResource("AnimationNodeStateMachineTransition_qjemb"), "CrouchLocomotion", "CrouchUp", SubResource("AnimationNodeStateMachineTransition_j4mfl"), "CrouchUp", "Locomotion", SubResource("AnimationNodeStateMachineTransition_4kb0m")]
+graph_offset = Vector2(-81.41522, 83)

@@ -21,6 +21,7 @@
 
 [sub_resource type="Animation" id="Animation_bi64h"]
 length = 0.001
+step = 0.083333336
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -49,6 +50,7 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_p1odr"]
 resource_name = "crouch"
 length = 0.001
+step = 0.083333336
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -61,10 +63,23 @@ tracks/0/keys = {
 "update": 1,
 "values": [&"crouch"]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite3D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_xuaoq"]
 resource_name = "crouch_down"
-length = 0.001
+length = 0.083341666
+step = 0.083333336
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -77,10 +92,23 @@ tracks/0/keys = {
 "update": 1,
 "values": [&"crouch_down"]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite3D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
 
 [sub_resource type="Animation" id="Animation_wohnl"]
 resource_name = "crouch_up"
-length = 0.001
+length = 0.083341666
+step = 0.083333336
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -93,11 +121,24 @@ tracks/0/keys = {
 "update": 1,
 "values": [&"crouch_up"]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite3D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
 
 [sub_resource type="Animation" id="Animation_36dho"]
 resource_name = "crouch_walk"
-length = 0.001
+length = 0.8750125
 loop_mode = 1
+step = 0.125
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -109,6 +150,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [&"crouch_walk"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite3D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 
 [sub_resource type="Animation" id="Animation_yh6i2"]
@@ -871,7 +924,6 @@ roll_duration = 0.4
 air_roll_distance = 1.3
 air_roll_duration = 0.5
 air_roll_vertical_boost = 2.0
-attack_damage = 20.0
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("2_fd4e3")
@@ -893,11 +945,11 @@ one_shot = true
 one_shot = true
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-active = false
 tree_root = ExtResource("3_qqcod")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
-parameters/InAir/blend_position = -0.0014131609
+parameters/CrouchLocomotion/blend_position = 0.0047266185
+parameters/InAir/blend_position = -0.00952518
 parameters/Locomotion/blend_position = 0.0048867315
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
